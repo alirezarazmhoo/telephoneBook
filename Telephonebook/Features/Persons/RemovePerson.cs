@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Telephonebook.Data;
 using Telephonebook.Models;
+using static Telephonebook.Interfaces.IGenericRepository;
 
 namespace Telephonebook.Features.Persons
 {
@@ -12,19 +13,16 @@ namespace Telephonebook.Features.Persons
 		}
 		public class CommandHandler : IRequestHandler<Command, Unit>
 		{
-			private readonly TelephonebookContext _db;
-
-			public CommandHandler(TelephonebookContext db)
+			public readonly IGenericRepository<Person> _Repository;
+			public CommandHandler(IGenericRepository<Person> repository)
 			{
-				_db = db;
-
+				_Repository = repository;
 			}
 			public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
 			{
-				var person = await _db.Person.FindAsync(request.Id);
+				var person = await _Repository.GetByIdAsync(request.Id);
 				if (person == null) return Unit.Value;
-				_db.Person.Remove(person);
-				await _db.SaveChangesAsync();
+				_Repository.Delete(person);
 				return Unit.Value;
 			}
 		}

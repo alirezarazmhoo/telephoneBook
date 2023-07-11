@@ -1,7 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using Telephonebook.Data;
 using Telephonebook.Models;
+using Telephonebook.Specifications;
+using static Telephonebook.Interfaces.IGenericRepository;
 
 namespace Telephonebook.Features.Persons
 {
@@ -9,20 +12,23 @@ namespace Telephonebook.Features.Persons
 	{
 		public class Query : IRequest<Person>
 		{
-			public string title { get; set; }
-			public long mobile { get; set; }
+			public string Title { get; set; } = string.Empty;
+			public long Mobile { get; set; }
 		}
 		public class QueryHandler : IRequestHandler<Query, Person>
 		{
-			private readonly TelephonebookContext _db;
-			public QueryHandler(TelephonebookContext db)
+			public readonly IGenericRepository<Person> _Repository;
+			public QueryHandler(IGenericRepository<Person> repository)
 			{
-				this._db = db;
+				_Repository = repository;
 			}
 			public async Task<Person> Handle(Query request, CancellationToken cancellationToken)
 			{
+				var specification = new FindPersonByDetailSpecification(request);
+				var personItem = _Repository.FindWithSpecificationPattern(specification);
 
-				return await _db.Person.FirstOrDefaultAsync(s => s.Address.Contains(request.title) || s.FullName.Contains(request.title) || s.Email.Contains(request.title) || s.Mobile == request.mobile);
+				return personItem.FirstOrDefault();
+
 
 			}
 			}

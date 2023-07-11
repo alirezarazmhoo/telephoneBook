@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Telephonebook.Data;
 using Telephonebook.Models;
+using static Telephonebook.Interfaces.IGenericRepository;
 
 namespace Telephonebook.Features.Persons
 {
@@ -12,15 +13,21 @@ namespace Telephonebook.Features.Persons
 		}
 		public class QueryHandler : IRequestHandler<Query, Person>
 		{
-			private readonly TelephonebookContext _db;
-			public QueryHandler(TelephonebookContext db)
+		
+			public readonly IGenericRepository<Person> _Repository;
+			public QueryHandler(IGenericRepository<Person> repository)
 			{
-				this._db = db;
+				_Repository = repository;
 			}
+			
+			
 			public async Task<Person> Handle(Query request, CancellationToken cancellationToken)
 			{
-				return await _db.Person.FindAsync(request.Id);
+				return await _Repository.GetByIdAsync(request.Id);
+	
 			}
-		}
+			}
+		
+		
 	}
 }

@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "l06P29L1dPf0r0tyWt1txs/EojAc3lqQ58O9NNCpXUrKn1eeAOBiZWP+STiYYvw3TO+iy0Mu0M24JsmrKScv7g==",
+  "dgSpecHash": "oF0Y0z97iKJTFVY8JZBPbJA/xqp+Xou9ARmE2YtL2C77ell9bXmf53EpV9nmCGZiRvgr5ZlCgETBbNKcXyvmiw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Razmjoo\\source\\repos\\Telephonebook\\Telephonebook\\Telephonebook.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Razmjoo\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
+    "C:\\Users\\Razmjoo\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
+    "C:\\Users\\Razmjoo\\.nuget\\packages\\fluentvalidation\\11.0.1\\fluentvalidation.11.0.1.nupkg.sha512",
     "C:\\Users\\Razmjoo\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Razmjoo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Razmjoo\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",

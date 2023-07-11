@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Telephonebook.Data;
 using Telephonebook.Models;
+using static Telephonebook.Interfaces.IGenericRepository;
 
 namespace Telephonebook.Features.Persons
 {
@@ -10,14 +12,16 @@ namespace Telephonebook.Features.Persons
 		public class Query : IRequest<IEnumerable<Person>> { }
 		public class QueryHandler : IRequestHandler<Query, IEnumerable<Person>>
 		{
-			private readonly TelephonebookContext _db;
-			public QueryHandler(TelephonebookContext db)
+		
+			public readonly IGenericRepository<Person> _Repository;
+	
+			public QueryHandler(IGenericRepository<Person> repository)
 			{
-			this._db = db;
+				_Repository = repository;
 			}
 			public async Task<IEnumerable<Person>> Handle(Query request, CancellationToken cancellationToken)
 			{
-				return await _db.Person.ToListAsync(cancellationToken);
+				return await _Repository.GetAllAsync();
 			}
 		}
 

@@ -2,6 +2,7 @@
 using System.Diagnostics.Eventing.Reader;
 using Telephonebook.Data;
 using Telephonebook.Models;
+using static Telephonebook.Interfaces.IGenericRepository;
 
 namespace Telephonebook.Features.Persons
 {
@@ -9,32 +10,30 @@ namespace Telephonebook.Features.Persons
 	{
 		public class Command : IRequest<int>
 		{
-			public string FullName { get; set; }
+			public string FullName { get; set; } = string.Empty;
 			public long Mobile { get; set; }
-			public string Address { get; set; }
-			public string Email { get; set; }
+			public string Address { get; set; } = string.Empty;
+			public string Email { get; set; } = string.Empty;
 		}
 		public class CommandHandler : IRequestHandler<Command, int>
 		{
-			private readonly TelephonebookContext _db;
-
-			public CommandHandler(TelephonebookContext db) 
-			{ 
-				_db = db;
-			
+			public readonly IGenericRepository<Person> _Repository;
+			public CommandHandler(IGenericRepository<Person> repository)
+			{
+				_Repository = repository;
 			}
 			public async Task<int> Handle(Command request, CancellationToken cancellationToken)
 			{
 				var entity = new Person
 				{
+
 					FullName = request.FullName,
 					Mobile = request.Mobile,
 					Address = request.Address,
 					Email = request.Email,
 
 				};
-				await _db.Person.AddAsync(entity, cancellationToken);
-				await _db.SaveChangesAsync(cancellationToken);
+			await	_Repository.Insert(entity);
 				return entity.Id;
 			}
 		}
