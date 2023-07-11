@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Telephonebook.Data;
 
@@ -10,9 +11,10 @@ using Telephonebook.Data;
 namespace Telephonebook.Migrations
 {
     [DbContext(typeof(TelephonebookContext))]
-    partial class TelephonebookContextModelSnapshot : ModelSnapshot
+    [Migration("20230711144517_FixContactGroups")]
+    partial class FixContactGroups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

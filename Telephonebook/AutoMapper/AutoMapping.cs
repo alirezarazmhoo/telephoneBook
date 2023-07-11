@@ -11,6 +11,10 @@ namespace Telephonebook.AutoMapper
 		{
 			CreateMap<Person, PersonViewModel>().ReverseMap();
 			CreateMap<Command, PersonViewModel> ().ReverseMap();
+			CreateMap<ContactGroup, ContactGroupViewModel>().ReverseMap();
+
+
+			
 		}
 	}
 }

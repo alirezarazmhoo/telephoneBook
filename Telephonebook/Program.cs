@@ -9,11 +9,14 @@ using static Telephonebook.Interfaces.IGenericRepository;
 using Telephonebook.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using AutoMapper;
+using Telephonebook.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TelephonebookContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TelephonebookContext") ?? throw new InvalidOperationException("Connection string 'TelephonebookContext' not found.")));
 builder.Services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+builder.Services.AddScoped(typeof(IEditContactGroupRepository), (typeof(EditContactGroupRepository)));
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Add services to the container.
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());

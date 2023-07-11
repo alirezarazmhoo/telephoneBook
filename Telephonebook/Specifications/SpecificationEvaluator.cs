@@ -20,7 +20,10 @@ namespace Telephonebook.Specifications
 			{
 				query = query.OrderByDescending(spec.OrderByDescending);
 			}
-			query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+			if(spec.Includes != null)
+			{
+		    	query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+			}
 			return query;
 		}
 	}

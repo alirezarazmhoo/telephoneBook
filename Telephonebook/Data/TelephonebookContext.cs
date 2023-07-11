@@ -15,5 +15,10 @@ namespace Telephonebook.Data
         }
 
         public DbSet<Telephonebook.Models.Person> Person { get; set; } = default!;
-    }
+		public DbSet<Telephonebook.Models.ContactGroup>  ContactGroups { get; set; } = default!;
+
+		public DbSet<Telephonebook.Models.PersonToContractGroup>  PersonToContractGroups { get; set; } 
+
+		
+	}
 }
