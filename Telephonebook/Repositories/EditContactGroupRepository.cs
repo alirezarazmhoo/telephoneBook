@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Telephonebook.Data;
+using Telephonebook.DomainService;
 using Telephonebook.Interfaces;
 using Telephonebook.Models;
 
@@ -8,9 +9,13 @@ namespace Telephonebook.Repositories
 	public class EditContactGroupRepository : IEditContactGroupRepository
 	{
 		protected readonly TelephonebookContext _Context;
-		public EditContactGroupRepository(TelephonebookContext context)
+		protected readonly IExecuteEditPersonToContactgroup _ExecuteEditPersonToContactgroup;
+
+
+		public EditContactGroupRepository(TelephonebookContext context , IExecuteEditPersonToContactgroup executeEditPersonToContactgroup)
 		{
 			_Context = context;
+			_ExecuteEditPersonToContactgroup = executeEditPersonToContactgroup;
 		}
 		public async Task AddAsync(int GroupId, List<int> PersonIds)
 		{
@@ -28,10 +33,8 @@ namespace Telephonebook.Repositories
 				}
 				foreach (var item in PersonIds)
 				{
-					var entity = new PersonToContractGroup();
-					entity.PersonId = item;
-					entity.ContactGroupId = GroupId;
-					_Context.PersonToContractGroups.Add(entity);
+			
+					_Context.PersonToContractGroups.Add(_ExecuteEditPersonToContactgroup.UpdateContactGroup(item, GroupId));
 				}
 			await	_Context.SaveChangesAsync();
 					}

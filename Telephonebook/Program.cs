@@ -10,6 +10,7 @@ using Telephonebook.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using AutoMapper;
 using Telephonebook.Interfaces;
+using Telephonebook.DomainService;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TelephonebookContext>(options =>
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<TelephonebookContext>(options =>
 builder.Services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
 builder.Services.AddScoped(typeof(IEditContactGroupRepository), (typeof(EditContactGroupRepository)));
 builder.Services.AddScoped(typeof(IEditContactFavoritRepository), (typeof(EditContactFavoritRepository)));
+builder.Services.AddScoped(typeof(IFavoritRepository), (typeof(FavoritRepository)));
+builder.Services.AddScoped(typeof(IExecuteEditPersonToContactgroup), (typeof(ExecuteEditPersonToContactgroupRepository)));
+
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Add services to the container.

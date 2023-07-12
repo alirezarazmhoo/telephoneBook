@@ -1,4 +1,5 @@
 ﻿using Telephonebook.Data;
+using Telephonebook.DomainService;
 using Telephonebook.Interfaces;
 
 namespace Telephonebook.Repositories
@@ -6,9 +7,11 @@ namespace Telephonebook.Repositories
 	public class EditContactFavoritRepository : IEditContactFavoritRepository
 	{
 		protected readonly TelephonebookContext _Context;
-		public EditContactFavoritRepository(TelephonebookContext context)
+		protected readonly IFavoritRepository _FavoritRepository;
+		public EditContactFavoritRepository(TelephonebookContext context, IFavoritRepository favoritRepository)
 		{
 			_Context = context;
+			_FavoritRepository = favoritRepository;
 		}
 
     	public async Task AddToFavorit(int PersonId)
@@ -16,12 +19,11 @@ namespace Telephonebook.Repositories
 			if(_Context.Person != null)
 			{
 			var Item = await _Context.Person.FindAsync(PersonId);
-				if(Item != null)
+				if (Item != null)
 				{
-				Item.IsFavorit = true;
-
+				_FavoritRepository.AddToFavorit(Item);
 				}
-			await	_Context.SaveChangesAsync();
+				await	_Context.SaveChangesAsync();
 			}
 
 		}
@@ -32,8 +34,7 @@ namespace Telephonebook.Repositories
 				var Item = await _Context.Person.FindAsync(PersonId);
 				if (Item != null)
 				{
-					Item.IsFavorit = false;
-
+					_FavoritRepository.RemoveFavorit(Item);
 				}
 				await _Context.SaveChangesAsync();
 
