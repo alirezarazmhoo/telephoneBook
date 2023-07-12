@@ -16,6 +16,7 @@ builder.Services.AddDbContext<TelephonebookContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TelephonebookContext") ?? throw new InvalidOperationException("Connection string 'TelephonebookContext' not found.")));
 builder.Services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
 builder.Services.AddScoped(typeof(IEditContactGroupRepository), (typeof(EditContactGroupRepository)));
+builder.Services.AddScoped(typeof(IEditContactFavoritRepository), (typeof(EditContactFavoritRepository)));
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Add services to the container.

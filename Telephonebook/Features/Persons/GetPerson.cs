@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Telephonebook.Data;
 using Telephonebook.Models;
+using Telephonebook.Specifications;
 using static Telephonebook.Interfaces.IGenericRepository;
 
 namespace Telephonebook.Features.Persons
@@ -21,7 +22,9 @@ namespace Telephonebook.Features.Persons
 			}
 			public async Task<IEnumerable<Person>> Handle(Query request, CancellationToken cancellationToken)
 			{
-				return await _Repository.GetAllAsync();
+				var specification = new GetPersonsBasedOnFavoritSpecification();
+				return  await _Repository.FindWithSpecificationPattern(specification);
+			
 			}
 		}
 

@@ -25,7 +25,7 @@ namespace Telephonebook.Features.Persons
 			public async Task<Person> Handle(Query request, CancellationToken cancellationToken)
 			{
 				var specification = new FindPersonByDetailSpecification(request);
-				var personItem = _Repository.FindWithSpecificationPattern(specification);
+				var personItem = await _Repository.FindWithSpecificationPattern(specification);
 
 				return personItem.FirstOrDefault();
 

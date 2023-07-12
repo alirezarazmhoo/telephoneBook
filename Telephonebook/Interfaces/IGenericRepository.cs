@@ -8,7 +8,7 @@
 			Task<List<T>> GetAllAsync();
 			Task Insert(T entity);
 			void Delete(T entity);
-			IEnumerable<T> FindWithSpecificationPattern(ISpecification<T>? specification = null);
+		Task<IEnumerable<T>> FindWithSpecificationPattern(ISpecification<T>? specification = null);
 		}
 	}
 }

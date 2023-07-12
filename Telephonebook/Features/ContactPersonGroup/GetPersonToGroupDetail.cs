@@ -24,9 +24,8 @@ namespace Telephonebook.Features.ContactPersonGroup
 
 			public async Task<IEnumerable<PersonToContractGroup>> Handle(Query request, CancellationToken cancellationToken)
 			{
-				var Item =  await _Repository.GetByIdAsync(request.GroupId);
-				var specification = new PersonToContactGroupSpecifications();
-				var personItem = _Repository.FindWithSpecificationPattern(specification);
+				var specification = new PersonToContactGroupSpecifications(request.GroupId);
+				var personItem = await _Repository.FindWithSpecificationPattern(specification);
 				var data = personItem.Where(s => s.ContactGroupId == request.GroupId).ToList();
 				return data;
 			}

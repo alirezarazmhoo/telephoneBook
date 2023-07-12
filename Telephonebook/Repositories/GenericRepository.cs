@@ -39,13 +39,13 @@ namespace Telephonebook.Repositories
 			_Context.Remove(entity);
 			_Context.SaveChanges();
 		}
-		public IEnumerable<T> FindWithSpecificationPattern(ISpecification<T>? specification )
+		public Task< IEnumerable<T>> FindWithSpecificationPattern(ISpecification<T>? specification )
 		{
 			if(specification != null)
 			{
-			return SpecificationEvaluator<T>.GetQuery(_Context.Set<T>().AsQueryable(), specification);
+			return Task.FromResult<IEnumerable<T>>(SpecificationEvaluator<T>.GetQuery(_Context.Set<T>().AsQueryable(), specification));
 			}
-			return Enumerable.Empty<T>();
+			return Task.FromResult(Enumerable.Empty<T>());
 	
 		}
 	}

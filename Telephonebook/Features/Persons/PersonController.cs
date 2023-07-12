@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Telephonebook.Models;
 using Telephonebook.Validator;
+using static Telephonebook.Features.Persons.AddContactFavorit;
+using static Telephonebook.Features.Persons.RemoveContactFavorit;
 
 namespace Telephonebook.Features.Persons
 {
@@ -34,8 +36,8 @@ namespace Telephonebook.Features.Persons
 		var item =	await _Mediator.Send(new GetPersonById.Query { Id = id });
 		var mapitem = _mapper.Map<Person>(item); 
 		return mapitem;
-		} 
-		[HttpPost]
+		}
+		[HttpPost("CreatePerson")]
 		public async Task<ActionResult> CreatePerson([FromBody] AddNewPerson.Command command)
 		{
 			var validator = new RegisterPersonValidator();
@@ -47,6 +49,21 @@ namespace Telephonebook.Features.Persons
 
 			var createPersonId = await _Mediator.Send(command);
 			return CreatedAtAction(nameof(GetPerson), new { id = createPersonId }, null);
+		}
+		[HttpPost("MakeFavorit")]
+
+		public async Task<ActionResult> MakeFavorit([FromBody] ContactFavoritCommand command)
+		{
+			await _Mediator.Send(new ContactFavoritCommand {  PersonId = command.PersonId });
+			return NoContent();
+		}
+	
+		[HttpPost("RemoveFavorit")]
+
+		public async Task<ActionResult> RemoveFavorit([FromBody] RemoveContactFavoritCommand command)
+		{
+			await _Mediator.Send(new RemoveContactFavoritCommand {  PersonId = command.PersonId });
+			return NoContent();
 		}
 
 		[HttpDelete("{id}")]

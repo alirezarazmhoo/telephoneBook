@@ -14,9 +14,13 @@ namespace Telephonebook.Repositories
 		}
 		public async Task AddAsync(int GroupId, List<int> PersonIds)
 		{
+			if (_Context.ContactGroups != null)
+			{
 			var GroupItem = await _Context.ContactGroups.FindAsync(GroupId);
 			if(GroupItem != null)
 			{
+		if (_Context.PersonToContractGroups != null)
+					{
 			var oldList = 	await _Context.PersonToContractGroups.Where(s => s.ContactGroupId == GroupId).ToListAsync();
 				foreach (var item in oldList)
 				{
@@ -30,6 +34,8 @@ namespace Telephonebook.Repositories
 					_Context.PersonToContractGroups.Add(entity);
 				}
 			await	_Context.SaveChangesAsync();
+					}
+			}
 			}
 
 		}
